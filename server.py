@@ -45,8 +45,8 @@ def predict_rating(movie: MovieData):
     # Transform data to match expected format
     print(movie)
     movie_dict = movie.model_dump()
-    movie_dict["genre"] = str(movie.genre) if movie.genre else ""
-    movie_dict["keywords"] = ",".join(movie.keywords) if movie.keywords else ""
+    movie_dict["genre"] = str(movie.genre) if movie.genre else "[]"
+    movie_dict["keywords"] = ",".join(movie.keywords) if movie.keywords else "[]"
     movie_dict["Minutes"] = f"PT{movie.duration}M" if movie.duration else "PT0M"
     movie_dict["actors"] = str([{"name": actor} for actor in movie.actors]) if movie.actors else "[]"
     movie_dict["directors"] = str([{"name": director} for director in movie.directors]) if movie.directors else "[]"
@@ -74,8 +74,8 @@ def predict_rating_list(movies: list[MovieData]):
 
     for movie in movies:
         movie_dict = movie.model_dump()
-        movie_dict["genre"] = str(movie.genre) if movie.genre else ""
-        movie_dict["keywords"] = ",".join(movie.keywords) if movie.keywords else ""
+        movie_dict["genre"] = str(movie.genre) if movie.genre else "[]"
+        movie_dict["keywords"] = ",".join(movie.keywords) if movie.keywords else "[]"
         movie_dict["Minutes"] = f"PT{movie.duration}M" if movie.duration else "PT0M"
         movie_dict["actors"] = str([{"name": actor} for actor in movie.actors]) if movie.actors else "[]"
         movie_dict["directors"] = str([{"name": director} for director in movie.directors]) if movie.directors else "[]"
