@@ -4,6 +4,9 @@ import pickle
 from pydantic import BaseModel
 from sklearn.preprocessing import StandardScaler
 from typing import Optional
+from fastapi.middleware.cors import CORSMiddleware
+
+from starlette.middleware.cors import CORSMiddleware
 
 from model import load_model
 from utilities import convert
@@ -16,6 +19,12 @@ model = load_model()
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (replace "*" with your frontend URL in production)
+    allow_methods=["POST", "OPTIONS"],  # Allow POST and OPTIONS methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 class MovieData(BaseModel):
     name: str
@@ -34,6 +43,7 @@ class MovieData(BaseModel):
 @app.post("/predict")
 def predict_rating(movie: MovieData):
     # Transform data to match expected format
+    print(movie)
     movie_dict = movie.model_dump()
     movie_dict["genre"] = str(movie.genre) if movie.genre else ""
     movie_dict["keywords"] = ",".join(movie.keywords) if movie.keywords else ""
