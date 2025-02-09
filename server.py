@@ -3,6 +3,7 @@ import pandas as pd
 import pickle
 from pydantic import BaseModel
 from sklearn.preprocessing import StandardScaler
+from typing import Optional
 
 from model import load_model
 from utilities import convert
@@ -18,16 +19,16 @@ app = FastAPI()
 
 class MovieData(BaseModel):
     name: str
-    genre: list[str]
-    datePublished: str
-    contentRating: str
-    keywords: list[str]
-    ratingCount: int
-    budget: float
-    duration: int
-    actors: list[str]
-    directors: list[str]
-    creators: list[str]
+    genre: Optional[list[str]] = None
+    datePublished: Optional[str] = None
+    contentRating: Optional[str] = None
+    keywords: Optional[list[str]] = None
+    ratingCount: Optional[int] = None
+    budget: Optional[float] = None
+    duration: Optional[int] = None
+    actors: Optional[list[str]] = None
+    directors: Optional[list[str]] = None
+    creators: Optional[list[str]] = None
 
 
 @app.post("/predict")
